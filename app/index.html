@@ -14,21 +14,72 @@
     <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div class="site">
-      <header role="banner">
+    <div id="beer-app" class="site">
+      <header class="site__header" role="banner">
         <h1>Backbone Beer</h1>
-      </header>
-      <main role="main">
-
-      </main>
-      <footer role="contentinfo">
+        <form id="add-form">
+          <label>
+            <span class="label">Name</span>
+            <input name="name" type="text">
+          </label><br class="hidden">
+          <label>
+            <span class="label">Brewery</span>
+            <input name="brewery" type="text">
+          </label><br class="hidden">
+          <label>
+            <span class="label">Tags</span>
+            <input name="tags" type="text">
+            <span class="instructions">(Separate with a space)</span>
+          </label><br class="hidden">
+          <label>
+            <span class="label">Rating</span>
+            <input type="number" name="rating" value="3" min="1" max="5" step="1">
+            <space class="instructions">(1 to 5)</space>
+          </label><br class="hidden">
+          <button type="submit">Create</button>
+        </form><!-- #add-form -->
+      </header><!-- .site__header -->
+      <main id="main" class="site__content" role="main">
+        <div id="beers-go-here"></div>
+      </main><!-- .site__content -->
+      <footer class="site__footer" role="contentinfo">
         <small>An experiment by <a href="http://www.swashcap.com/">Swash Cap</a>.</small>
-      </footer>
+      </footer><!-- .site__footer -->
     </div><!-- .site -->
+
+    <script type="text/template" id="beer-template">
+      <h3 class="beer__name"><%= name %></h3>
+      <h4 class="beer__brewery"><%= brewery %></h4>
+      <p class="beer__rating"><strong><%= rating %></strong> out of <span>5</span></p>
+      <ul class="beer__tags">
+        <% _.each(tags, function(tag) {%>
+          <li><%= tag %></li>
+        <% }); %>
+      </ul>
+      <form>
+        <input name="name" type="text" value="<%= name %>">
+        <input name="brewery" type="text" value="<%= brewery %>">
+        <input name="tags" type="text" value="<%= tags.join(' ') %>">
+        <input name="number" type="number" value="<%= rating %>" min="1" max="5" step="1">
+        <button class="beer__save" type="submit">Save</button>
+      </form>
+      <div class="beer__controls">
+        <button class="beer__edit">Edit</button>
+        <button class="beer__remove">Remove</button>
+      </div>
+    </script>
 
     <script src="bower_components/zepto/zepto.min.js"></script>
     <script src="bower_components/lodash/dist/lodash.underscore.min.js"></script>
     <script src="bower_components/backbone/backbone.js"></script>
+    <script src="bower_components/backbone.localStorage/backbone.localStorage-min.js"></script>
+    <script src="scripts/setup.js"></script>
+    <script src="scripts/models/beer.js"></script>
+    <script src="scripts/collections/beers.js"></script>
+    <script src="scripts/views/beer.js"></script>
+    <script src="scripts/views/app.js"></script>
+    <script src="scripts/router/router.js"></script>
+    <script src="scripts/app.js"></script>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID.
     <script>
