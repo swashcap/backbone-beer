@@ -33,7 +33,8 @@ app.AppView = Backbone.View.extend({
     this.$beerContainer.append(beerView.render().el);
   },
 
-  /**   * Handle beer add form.
+  /**
+   * Handle beer add form.
    *
    * @todo Validate form.
    *

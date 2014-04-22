@@ -6,12 +6,7 @@ var BeerList = Backbone.Collection.extend({
   localStorage: new Backbone.LocalStorage(LOCAL_STORAGE_NS),
 
   initialize: function() {
-    //this.listenTo(this.models, 'testBeerTrigger', this.test);
-    console.log(this.models);
-  },
 
-  test: function() {
-    console.log('BeerList.test() fired.');
   }
 });
 

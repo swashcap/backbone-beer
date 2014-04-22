@@ -6,8 +6,9 @@ app.BeerView = Backbone.View.extend({
   template: _.template( $('#beer-template').html() ),
 
   events: {
-    'click .beer__edit': 'editBeer',
-    'click .beer__save': 'saveBeer',
+    'click .beer__edit': 'edit',
+    'click .beer__cancel': 'close',
+    'click .beer__save': 'save',
     'click .beer__remove': 'deleteBeer'
   },
 
@@ -22,16 +23,36 @@ app.BeerView = Backbone.View.extend({
     return this;
   },
 
-  editBeer: function(e) {
-    e.preventDefault();
+  edit: function(e) {
+    if (e) {
+      e.preventDefault();
+    }
 
-    console.log('editBeer() fired.');
+    this.$el.addClass('is-editing');
   },
 
-  saveBeer: function(e) {
+  close: function(e) {
+    if (e) {
+      e.preventDefault();
+    }
+
+    this.$el.removeClass('is-editing');
+  },
+
+  /**
+   * @todo Fix bug where saving re-renders the front of the beer card.
+   */
+  save: function(e) {
     e.preventDefault();
 
-    console.log('saveBeer() fired.');
+    var $form = this.$el.find('form');
+
+    var formData = app.formatBeerInput($form);
+
+    this.model.save(formData);
+
+    this.render();
+    this.close();
   },
 
   deleteBeer: function() {

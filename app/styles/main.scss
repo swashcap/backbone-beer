@@ -38,7 +38,7 @@ $green:     #abb498;
   font-family: Futura, "Helvetica Neue", sans-serif;
 }
 @mixin font-mono {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "American Typewriter", "Courier New", Courier, monospace;
 }
 
 /* Defaults
@@ -52,6 +52,63 @@ html {
   font-size: 100%;
   line-height: 1.4;
 }
+
+/**
+ * Forms.
+ */
+
+label {
+  display: block;
+  margin: 0 0 .75em;
+
+  .label {
+    display: block;
+    font-size: 80%;
+    text-transform: uppercase;
+  }
+  .instructions {
+    font-size: 50%;
+    opacity: .66;
+    text-transform: uppercase;
+  }
+}
+input[type="text"],
+input[type="number"] {
+  @include font-mono;
+
+  background-color: $white;
+  border: $black solid 2px;
+  box-shadow:
+    1px 1px $black,
+    2px 2px $black;
+  color: $darkGray;
+  padding: .25em .5em;
+  text-align: center;
+  width: 100%;
+}
+form br {
+  display: none;
+}
+form button {
+  background-color: $white;
+  border: $black solid 2px;
+  box-shadow:
+    1px 1px $black,
+    2px 2px $black;
+  color: $black;
+  display: inline-block;
+  font-size: 80%;
+  font-weight: 700;
+  margin: .5em 0;
+  padding: .25em .5em;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+/* Generaly Layout
+   ========================================================================== */
+
 .site {
   position: relative;
 }
@@ -103,6 +160,7 @@ html {
   padding: .5em 1em;
   position: fixed;
   text-align: right;
+  text-shadow: 1px 1px $black;
 
   a {
     color: $gray;
@@ -119,53 +177,8 @@ html {
 #add-form {
   margin: 0 0 1em;
 
-  label {
-    display: block;
-    margin: 0 0 .75em;
-
-    .label {
-      display: block;
-      font-size: 80%;
-      text-transform: uppercase;
-    }
-    .instructions {
-      font-size: 50%;
-      opacity: .66;
-      text-transform: uppercase;
-    }
-  }
-  input[type="text"],
-  input[type="number"] {
-    @include font-mono;
-
-    background-color: $white;
-    border: $black solid 2px;
-    box-shadow:
-      1px 1px $black,
-      2px 2px $black;
-    color: $darkGray;
-    font-weight: 700;
-    padding: .25em .5em;
-    width: 100%;
-  }
-  br {
-    display: none;
-  }
   button {
     background-color: $orange;
-    border: $black solid 2px;
-    box-shadow:
-      1px 1px $black,
-      2px 2px $black;
-    color: $black;
-    display: inline-block;
-    font-size: 80%;
-    font-weight: 700;
-    margin: .5em 0;
-    padding: .25em .5em;
-    text-align: center;
-    text-transform: uppercase;
-    width: 100%;
   }
 }
 
@@ -181,16 +194,73 @@ html {
     1px 1px $black,
     2px 2px $black;
   float: left;
+  height: 290px;
   margin: 0 1em 1em 0;
+  overflow: scroll;
+  perspective: 800px;
   position: relative;
   width: 240px;
+}
 
-  img {
-    float: right;
-    height: auto;
-    width: 100px;
+/**
+ * Alternate backgrounds every other beer.
+ */
+.beer:nth-of-type(even) {
+  &,
+  .csstransforms3d & .beer__front {
+    background-color: $green;
+  }
+  .beer__tags li {
+    color: $green;
   }
 }
+
+/**
+ * Front and Back.
+ *
+ * @link http://desandro.github.io/3dtransforms/docs/card-flip.html
+ */
+
+.beer__back {
+  display: none;
+}
+.csstransforms3d {
+  .beer {
+    background: none;
+    border: none;
+    box-shadow: none;
+    transform: translate3d(0, 0, 0);
+  }
+  .beer__wrapper {
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform .5s;
+    width: 100%;
+  }
+  .beer__front,
+  .beer__back {
+    border: 2px solid $black;
+    box-shadow:
+      1px 1px $black,
+      2px 2px $black;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    display: block;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+  .beer__front {
+    background-color: $yellow;
+  }
+  .beer__back {
+    background-color: $lightGray;
+    display: block;
+    transform: rotateY(180deg);
+  }
+}
+
 .beer__name {
   @include font-mono;
   border-bottom: 2px solid $black;
@@ -264,14 +334,11 @@ html {
 
     background-color: $darkGray;
     color: $yellow;
-    display: block;
-    float: left;
+    display: inline-block;
     font-size: 80%;
-    font-weight: 700;
     line-height: 1;
-    margin: 0 .5em .5em 0;
+    margin: 0 .5rem .5rem 0;
     padding: .33em .5em;
-    position: relative;
     text-transform: uppercase;
   }
 }
@@ -287,6 +354,9 @@ html {
 %beer__button {
   background-color: $blue;
   border: 2px solid $black;
+  box-shadow:
+    1px 1px $black,
+    2px 2px $black;
   color: $black;
   display: inline-block;
   float: left;
@@ -310,4 +380,50 @@ html {
   border-left-width: 1px;
   color: $white;
 }
+.beer__cancel {
+  @extend %beer__button;
 
+  background-color: $darkGray;
+  border-right-width: 1px;
+  color: $white;
+}
+.beer__save {
+  @extend %beer__button;
+
+  border-left-width: 1px;
+  color: $white;
+}
+
+.beer form {
+  padding: 1em;
+
+  input[type="text"],
+  input[type="number"] {
+    margin-bottom: .75em;
+  }
+
+  .beer__controls {
+    padding: 0 0 .75em 0;
+  }
+}
+
+/**
+ * Beer States.
+ */
+.beer.is-editing {
+  .beer__front {
+    display: none;
+  }
+  .beer__back {
+    display: block;
+  }
+
+  .csstransforms3d & {
+    .beer__wrapper {
+      transform: rotateY(180deg);
+    }
+    .beer__front {
+      display: block;
+    }
+  }
+}

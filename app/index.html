@@ -48,25 +48,35 @@
     </div><!-- .site -->
 
     <script type="text/template" id="beer-template">
-      <h3 class="beer__name"><%= name %></h3>
-      <h4 class="beer__brewery"><%= brewery %></h4>
-      <p class="beer__rating"><strong><%= rating %></strong> out of <span>5</span></p>
-      <ul class="beer__tags">
-        <% _.each(tags, function(tag) {%>
-          <li><%= tag %></li>
-        <% }); %>
-      </ul>
-      <form>
-        <input name="name" type="text" value="<%= name %>">
-        <input name="brewery" type="text" value="<%= brewery %>">
-        <input name="tags" type="text" value="<%= tags.join(' ') %>">
-        <input name="number" type="number" value="<%= rating %>" min="1" max="5" step="1">
-        <button class="beer__save" type="submit">Save</button>
-      </form>
-      <div class="beer__controls">
-        <button class="beer__edit">Edit</button>
-        <button class="beer__remove">Remove</button>
-      </div>
+      <div class="beer__wrapper">
+        <div class="beer__front">
+          <h3 class="beer__name"><%= name %></h3>
+          <h4 class="beer__brewery"><%= brewery %></h4>
+          <p class="beer__rating"><strong><%= rating %></strong> out of <span>5</span></p>
+          <ul class="beer__tags">
+            <% _.each(tags, function(tag) {%>
+              <li><%= tag %></li>
+            <% }); %>
+          </ul>
+          <div class="beer__controls">
+            <button class="beer__edit">Edit</button>
+            <button class="beer__remove">Remove</button>
+          </div>
+        </div>
+        <div class="beer__back"><!-- Heh. -->
+          <form>
+            <input name="name" type="text" value="<%= name %>">
+            <input name="brewery" type="text" value="<%= brewery %>">
+            <input name="tags" type="text" value="<%= tags.join(' ') %>">
+            <input name="number" type="number" value="<%= rating %>" min="1" max="5" step="1">
+
+            <div class="beer__controls">
+              <button class="beer__cancel" type="reset">Cancel</button>
+              <button class="beer__save" type="submit">Save</button>
+            </div>
+          </form>
+        </div>
+      </div><!-- .beer__wrapper -->
     </script>
 
     <script src="bower_components/zepto/zepto.min.js"></script>
